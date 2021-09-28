@@ -1,5 +1,6 @@
 image: ubuntu
 stages:
+  - build
   - test2
   - test
 
@@ -15,12 +16,14 @@ variables:
     AWS_SECRET_ACCESS_KEY: localsecret
 
 build:
+  image: localstack
    - apt -y update
    - apt -y install pip
    - pip install awscli
 
 test-application:
   stage: test2 
+  image: localstack
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
