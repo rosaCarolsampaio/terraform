@@ -1,12 +1,12 @@
-image: ubuntu
+image: localstack/localstack
 stages:
   - build
   - test2
   - test
 
-services:
-  - name: localstack/localstack
-    alias: localstack
+# services:
+#   - name: localstack/localstack
+#     alias: localstack
 
 variables:
     SERVICES: s3,sns,sqs
@@ -17,15 +17,13 @@ variables:
 
 build:
   stage: build
-  name: localstack
-  script:
+   script:
     - apt -y update
     - apt -y install pip
     - pip install awscli
 
 test-application:
   stage: test2 
-  image: localstack
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
