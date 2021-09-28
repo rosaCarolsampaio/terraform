@@ -21,7 +21,7 @@ test-application:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
     - aws --endpoint-url=http://localstack:4566 s3 mb s3://my-test-bucket
-    - aws --endpoint-url=http://localstack:4566 ls
+    - aws --endpoint-url=http://localstack:4566 s3 ls
 
 
 test-localstack:
