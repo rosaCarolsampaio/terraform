@@ -27,6 +27,7 @@ test-application:
 test-localstack:
   stage: test2
   services:
-    alias: localstack
+    - name: localstack/localstack
+      alias: localstack
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
