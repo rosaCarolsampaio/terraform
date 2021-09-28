@@ -5,7 +5,7 @@ test-application:
   stage: test2
   image: ubuntu
   variables:
-    SERVICES: s3:4572
+    SERVICES: s3:4563
     HOSTNAME_EXTERNAL: localstack 
     DEFAULT_REGION: eu-west-2
     AWS_ACCESS_KEY_ID: localkey
@@ -17,4 +17,4 @@ test-application:
     - apt -y update
     - apt -y install pip
     - pip install awscli
-    - aws s3api list-buckets --endpoint-url=http://localstack:4572
+    - aws s3api list-buckets --endpoint-url=http://localstack:4563
