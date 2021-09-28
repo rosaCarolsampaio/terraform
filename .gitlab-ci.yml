@@ -13,5 +13,4 @@ test-public-image:
   script:
     - yarn install
     - AWS_SQS_SERVICE_URL=http://thatawsthing:4576 yarn test
-  tags:
-    - docker
+
