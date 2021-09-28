@@ -1,16 +1,20 @@
 stages:
-  - test
+  - test2
 
-test-public-image:
-  stage: test
-  image: node:8
+test-application:
+  stage: test2
+  image: ubuntu
   variables:
-    SERVICES: sqs:4576
-    HOSTNAME_EXTERNAL: thatawsthing ## Name of the host to expose the services externally (defaults to localhost). This host is used, e.g., when returning queue URLs from the SQS service to the client.
+    SERVICES: s3,sns,sqs
+    HOSTNAME_EXTERNAL: localstack 
+    DEFAULT_REGION: eu-west-2
+    AWS_ACCESS_KEY_ID: localkey
+    AWS_SECRET_ACCESS_KEY: localsecret
   services:
     - name: localstack/localstack
-      alias: thatawsthing
+      alias: localstack
   script:
-    - yarn install
-    - AWS_SQS_SERVICE_URL=http://thatawsthing:4576 yarn test
-
+    - apt -y update
+    - apt -y install pip
+    - pip install awscli
+    - aws s3api list-buckets --endpoint-url=http://localstack:4572
