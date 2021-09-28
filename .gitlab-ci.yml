@@ -5,7 +5,8 @@ test-application:
   stage: test2
   image: ubuntu
   variables:
-    SERVICES: s3:4563
+    SERVICES: s3
+    S3_ENDPOINT: http://localstack:4563
     HOSTNAME_EXTERNAL: localstack 
     DEFAULT_REGION: eu-west-2
     AWS_ACCESS_KEY_ID: localkey
