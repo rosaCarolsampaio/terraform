@@ -7,7 +7,7 @@ test-application:
   variables:
     SERVICES: s3:4572
     HOSTNAME_EXTERNAL: localstack 
-    DEFAULT_REGION: eu-west-1
+    DEFAULT_REGION: eu-west-2
     AWS_ACCESS_KEY_ID: localkey
     AWS_SECRET_ACCESS_KEY: localsecret
   services:
