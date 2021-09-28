@@ -1,8 +1,12 @@
 image: ubuntu
 stages:
   - build
-  - test2
-  - test
+  - create
+  - list
+
+services:
+  - name: localstack/localstack
+    alias: localstack
 
 variables:
     SERVICES: s3,sns,sqs
@@ -13,16 +17,14 @@ variables:
 
 build:
   stage: build
-  services:
-  - name: localstack/localstack
-    alias: localstack
+  service: localstack
   script:
     - apt -y update
     - apt -y install pip
     - pip install awscli
 
 test-application:
-  stage: test2 
+  stage: create 
   image: localstack/localstack
   extends: build
   script:
@@ -33,7 +35,7 @@ test-application:
 
 
 test-localstack:
-  stage: test
+  stage: list
   image: localstack/localstack
   extends: build
   script:
