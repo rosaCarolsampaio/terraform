@@ -15,7 +15,6 @@ variables:
 
 test-application:
   stage: test2 
-  image: localstack
   script:
     - apt -y update
     - apt -y install pip
@@ -28,6 +27,5 @@ test-application:
 
 test-localstack:
   stage: test
-  image: localstack
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
