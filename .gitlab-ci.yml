@@ -1,4 +1,4 @@
-image: localstack/localstack
+image: ubuntu
 stages:
   - build
   - test2
