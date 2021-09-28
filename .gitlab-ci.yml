@@ -17,4 +17,4 @@ test-application:
     - apt -y update
     - apt -y install pip
     - pip install awscli
-    - aws s3api list-buckets --endpoint-url=http://localstack:4572
+    - aws s3api list-buckets --endpoint-url=http://localstack:4566
