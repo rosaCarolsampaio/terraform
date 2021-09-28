@@ -2,18 +2,19 @@ stages:
   - test2
   - test
 
-test-application:
-  stage: test2
-  image: ubuntu
-  variables:
+ services:
+    - name: localstack/localstack
+      alias: localstack
+
+variables:
     SERVICES: s3,sns,sqs
     HOSTNAME_EXTERNAL: localstack 
     DEFAULT_REGION: eu-west-2
     AWS_ACCESS_KEY_ID: localkey
     AWS_SECRET_ACCESS_KEY: localsecret
-  services:
-    - name: localstack/localstack
-      alias: localstack
+
+test-application:
+  stage: test2 
   script:
     - apt -y update
     - apt -y install pip
@@ -25,9 +26,6 @@ test-application:
 
 
 test-localstack:
-  stage: test2
-  services:
-    - name: localstack/localstack
-      alias: localstack
+  stage: test
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
