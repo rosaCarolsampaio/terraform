@@ -1,0 +1,18 @@
+stages:
+  - test2
+
+test-application:
+  stage: test2
+  image: ubuntu
+  variables:
+    SERVICES: s3:4572
+    HOSTNAME_EXTERNAL: localstack 
+    DEFAULT_REGION: eu-west-1
+    AWS_ACCESS_KEY_ID: localkey
+    AWS_SECRET_ACCESS_KEY: localsecret
+  services:
+    - name: localstack/localstack
+      alias: localstack
+  script:
+    - pip install awscli
+    - aws s3api list-buckets --endpoint-url=http://localstack:4572
