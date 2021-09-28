@@ -17,7 +17,7 @@ variables:
 
 build:
   stage: build
-  service: localstack
+  image: localstack/localstack
   script:
     - apt -y update
     - apt -y install pip
