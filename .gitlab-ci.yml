@@ -19,4 +19,4 @@ test-application:
     - apt -y update
     - apt -y install pip
     - pip install awscli
-    - aws --endpoint-url=http://localhost:4572 s3 ls
+    - aws --endpoint-url=http://localstack:4563 s3 ls
