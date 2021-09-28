@@ -1,8 +1,8 @@
 stages:
-  - test
+  - test2
 
 test-application:
-  stage: test
+  stage: test2
   image: ubuntu
   variables:
     SERVICES: s3:4572
