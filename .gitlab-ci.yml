@@ -18,9 +18,10 @@ variables:
 build:
   stage: build
   image: localstack
-   - apt -y update
-   - apt -y install pip
-   - pip install awscli
+  script:
+    - apt -y update
+    - apt -y install pip
+    - pip install awscli
 
 test-application:
   stage: test2 
