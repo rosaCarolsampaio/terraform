@@ -11,6 +11,7 @@ test-application:
     DEFAULT_REGION: eu-west-2
     AWS_ACCESS_KEY_ID: localkey
     AWS_SECRET_ACCESS_KEY: localsecret
+    USER: 'root'
   services:
     - name: localstack/localstack
       alias: localstack
