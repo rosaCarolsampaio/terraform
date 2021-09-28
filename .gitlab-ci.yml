@@ -14,7 +14,7 @@ variables:
     AWS_ACCESS_KEY_ID: localkey
     AWS_SECRET_ACCESS_KEY: localsecret
 
-before_script:
+build:
    - apt -y update
    - apt -y install pip
    - pip install awscli
@@ -22,7 +22,6 @@ before_script:
 test-application:
   stage: test2 
   script:
-   
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
     - aws --endpoint-url=http://localstack:4566 s3 mb s3://my-test-bucket
