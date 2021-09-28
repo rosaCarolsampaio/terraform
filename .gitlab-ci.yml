@@ -1,5 +1,6 @@
 stages:
   - test2
+  - test
 
 test-application:
   stage: test2
@@ -18,3 +19,14 @@ test-application:
     - apt -y install pip
     - pip install awscli
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
+    - aws --endpoint-url=http://localstack:4566 s3 ls
+    - aws --endpoint-url=http://localstack:4566 s3 mb s3://my-test-bucket
+    - aws --endpoint-url=http://localstack:4566 ls
+
+
+test-localstack:
+  stage: test2
+  services:
+     alias: localstack
+  script:
+   - aws --endpoint-url=http://localstack:4566 s3 ls
