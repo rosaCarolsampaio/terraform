@@ -4,10 +4,6 @@ stages:
   - test2
   - test
 
-# services:
-#   - name: localstack/localstack
-#     alias: localstack
-
 variables:
     SERVICES: s3,sns,sqs
     HOSTNAME_EXTERNAL: localstack 
@@ -17,6 +13,9 @@ variables:
 
 build:
   stage: build
+  services:
+  - name: localstack/localstack
+    alias: localstack
   script:
     - apt -y update
     - apt -y install pip
@@ -24,6 +23,7 @@ build:
 
 test-application:
   stage: test2 
+  extends: build
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
@@ -33,5 +33,6 @@ test-application:
 
 test-localstack:
   stage: test
+  extends: build
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
