@@ -32,6 +32,6 @@ test-application:
 
 test-localstack:
   stage: list
-  name: localstack
+  image: localstack
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
