@@ -12,6 +12,7 @@ variables:
     AWS_SECRET_ACCESS_KEY: localsecret
 
 before_script:
+    - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
     - apt -y update
     - apt -y install pip
     - pip install awscli
@@ -31,6 +32,6 @@ test-application:
 
 test-localstack:
   stage: list
-  image: localstack
+  name: localstack
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
