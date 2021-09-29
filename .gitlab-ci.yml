@@ -13,7 +13,9 @@ variables:
 
 build:
   stage: build
-  image: localstack/localstack
+  services:
+  - name: localstack/localstack
+    alias: localstack
   script:
     - apt -y update
     - apt -y install pip
@@ -21,9 +23,7 @@ build:
 
 test-application:
   stage: create 
-  services:
-  - name: localstack/localstack
-    alias: localstack
+  image: localstack/localstack
   extends: build
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
