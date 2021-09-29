@@ -11,8 +11,7 @@ variables:
     AWS_ACCESS_KEY_ID: localkey
     AWS_SECRET_ACCESS_KEY: localsecret
 
-build:
-  stage: build
+before_script:
   script:
     - apt -y update
     - apt -y install pip
@@ -24,8 +23,6 @@ test-application:
   - name: localstack/localstack
     alias: localstack
   extends: build
-  dependencies:
-   - build
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
