@@ -24,6 +24,8 @@ test-application:
   - name: localstack/localstack
     alias: localstack
   extends: build
+  dependencies:
+   - biuld
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
