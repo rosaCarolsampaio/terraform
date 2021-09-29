@@ -4,10 +4,6 @@ stages:
   - create
   - list
 
-services:
-  - name: localstack/localstack
-    alias: localstack
-
 variables:
     SERVICES: s3,sns,sqs
     HOSTNAME_EXTERNAL: localstack 
@@ -25,7 +21,9 @@ build:
 
 test-application:
   stage: create 
-  image: localstack/localstack
+  services:
+  - name: localstack/localstack
+    alias: localstack
   extends: build
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
@@ -36,7 +34,7 @@ test-application:
 
 test-localstack:
   stage: list
-  image: localstack/localstack
+  image: localstack
   extends: build
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
