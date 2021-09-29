@@ -12,7 +12,6 @@ variables:
     AWS_SECRET_ACCESS_KEY: localsecret
 
 before_script:
-  script:
     - apt -y update
     - apt -y install pip
     - pip install awscli
