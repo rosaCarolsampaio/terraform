@@ -1,9 +1,14 @@
 image: ubuntu
+
 stages:
   - build
   - create
   - list
   - dynamodb
+
+services:
+  - name: localstack/localstack
+    alias: localstack
 
 variables:
   SERVICES: s3,sns,sqs, dynamodb
@@ -19,11 +24,11 @@ before_script:
   - apt -y install pip
   - pip install awscli
 
+#after_script:
+ 
+
 test-application:
   stage: build 
-  services:
-  - name: localstack/localstack
-    alias: localstack
   # extends: build
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
