@@ -5,17 +5,17 @@ stages:
   - list
 
 variables:
-    SERVICES: s3,sns,sqs, dynamodb
-    HOSTNAME_EXTERNAL: localstack 
-    DEFAULT_REGION: eu-west-2
-    AWS_ACCESS_KEY_ID: localkey
-    AWS_SECRET_ACCESS_KEY: localsecret
+  SERVICES: s3,sns,sqs, dynamodb
+  HOSTNAME_EXTERNAL: localstack 
+  DEFAULT_REGION: eu-west-2
+  AWS_ACCESS_KEY_ID: localkey
+  AWS_SECRET_ACCESS_KEY: localsecret
 
 before_script:
-   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
-    - apt -y update
-    - apt -y install pip
-    - pip install awscli
+  # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
+  - apt -y update
+  - apt -y install pip
+  - pip install awscli
 
 test-application:
   stage: create 
@@ -29,12 +29,11 @@ test-application:
     - aws --endpoint-url=http://localstack:4566 s3 mb s3://my-test-bucket
     - aws --endpoint-url=http://localstack:4566 s3 ls s3://my-test-bucket
 
-
 test-localstack:
   stage: list
   services:
     - name: localstack/localstack
       alias: localstack
-    script:
-      - aws --endpoint-url=http://localstack:4566 s3 ls
+  script:
+     - aws --endpoint-url=http://localstack:4566 s3 ls
 
