@@ -40,6 +40,7 @@ test-application:
 test-localstack:
   stage: list
   script:
+    - aws --endpoint-url=http://localstack:4566 s3 ls
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
 
 dynamo-localstack:
@@ -54,5 +55,5 @@ dynamo-localstack:
 lambda-localstack:
   stage: lambda
   script:
-    - aws configure set region DEFAULT_REGION 
+    - aws configure set region $DEFAULT_REGION 
     - aws --endpoint-url http://localstack:4566 lambda list-functions
