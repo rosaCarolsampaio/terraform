@@ -3,6 +3,7 @@ stages:
   - build
   - create
   - list
+  - dynamodb
 
 variables:
   SERVICES: s3,sns,sqs, dynamodb
@@ -27,7 +28,7 @@ test-application:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
     - aws --endpoint-url=http://localstack:4566 s3 ls
     - aws --endpoint-url=http://localstack:4566 s3 mb s3://my-test-bucket
-    - aws --endpoint-url=http://localstack:4566 s3 ls s3://my-test-bucket
+    - aws s3api list-buckets --endpoint-url=http://localstack:4566
 
 test-localstack:
   stage: list
@@ -38,7 +39,7 @@ test-localstack:
     - aws --endpoint-url=http://localstack:4566 s3 ls
 
 dynamo-localstack:
-  stage: list
+  stage: dynamodb
   services:
     - name: localstack/localstack
       alias: localstack
