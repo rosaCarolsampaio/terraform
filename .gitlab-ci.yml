@@ -33,13 +33,11 @@ test-application:
 
 test-localstack:
   stage: list
-  image: localstack
   script:
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
 
 dynamo-localstack:
   stage: dynamodb
-  image: localstack
   script:
     - aws configure set region us-west-2 
     - aws --endpoint-url http://localstack:4566 dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
