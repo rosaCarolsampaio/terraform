@@ -12,7 +12,7 @@ services:
     alias: localstack
 
 variables:
-  SERVICES: s3,sns,sqs, dynamodb,lambda
+  SERVICES: s3,sns,sqs, dynamodb,lambda, kafka
   HOSTNAME_EXTERNAL: localstack 
   DEFAULT_REGION: eu-west-2
   AWS_ACCESS_KEY_ID: localkey
@@ -68,3 +68,13 @@ lambda-localstack:
 cache:
   paths:
     - s3://my-test-bucket/
+
+kafka-localstack:
+  stage: kafka
+  script:
+    - |
+      aws --endpoint-url http://localstack:4566  kafka create-cluster \
+      --cluster-name "MessagingCluster" \
+      --broker-node-group-info file://brokernodegroupinfo.json \
+      --kafka-version "2.2.1" \
+      --number-of-broker-nodes 3
