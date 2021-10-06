@@ -30,7 +30,7 @@ before_script:
  
 cache:
   paths:
-    - *.s3.localhost.localstack.cloud
+    - s3.localhost.localstack.cloud/
 
 test-application:
   stage: build 
