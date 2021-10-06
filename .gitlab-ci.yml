@@ -28,6 +28,14 @@ before_script:
 
 #after_script:
  
+registry:
+  enabled: true
+  host: registry.gitlab.example.com
+  port: 5005
+  api_url: http://localhost:5000/
+  key: config/registry.key
+  path: shared/registry
+  issuer: gitlab-issuer
 
 test-application:
   stage: build 
