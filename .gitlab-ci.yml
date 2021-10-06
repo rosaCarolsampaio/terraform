@@ -84,6 +84,6 @@ kafka-localstack:
     - |
       aws --endpoint-url $AWS_ENDPOINT  kafka create-cluster \
       --cluster-name "MessagingCluster" \
-      --broker-node-group-info file://brokernodegroupinfo.json \
+      --broker-node-group-info file://./payload/kafka.json \
       --kafka-version "2.2.1" \
       --number-of-broker-nodes 3
