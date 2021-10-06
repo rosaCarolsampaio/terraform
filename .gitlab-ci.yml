@@ -47,11 +47,13 @@ test-localstack:
 dynamo-localstack:
   stage: dynamodb
   script:
+    - echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
+    - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
     - aws configure set region $DEFAULT_REGION
-    - aws --endpoint-url http://localstack:4566 dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-    # - aws --endpoint-url http://localstack:8000 dynamodb put-item --table-name Music --item '{"Artist": {"S": "No One You Know"}, "SongTitle": {"S": "Call Me Today"}, "AlbumTitle": {"S": "Somewhat Famous"}}' --return-consumed-capacity TOTAL 
-    # - aws --endpoint-url http://localstack:8000 dynamodb list-tables 
-    # - aws http://localstack:8000dynamodb query --table-name Music
+    - aws --endpoint-url $AWS_ENDPOINT dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+    - aws --endpoint-url $AWS_ENDPOINT dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
+    - aws --endpoint-url $AWS_ENDPOINT dynamodb list-tables 
+    - aws --endpoint-url $AWS_ENDPOINT dynamodb query --table-name Music --key-conditions file://query_table.json- aws http://localstack:8000dynamodb query --table-name Music
 
 lambda-localstack:
   stage: lambda
