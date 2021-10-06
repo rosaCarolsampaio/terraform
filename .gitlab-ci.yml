@@ -36,7 +36,10 @@ cache:
 test-application:
   stage: build 
   # extends: build
-  cache:
+  # cache:
+  #   paths:
+  #     - s3://my-test-bucket/
+  artifacts:
     paths:
       - s3://my-test-bucket/
   script:
@@ -47,6 +50,8 @@ test-application:
 
 test-localstack:
   stage: list
+  dependencies:
+    - test-application
   script:
     - aws --endpoint-url=http://localstack:4566 s3 ls
     - aws s3api list-buckets --endpoint-url=http://localstack:4566
