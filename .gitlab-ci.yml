@@ -87,4 +87,4 @@ kafka-localstack:
       --cluster-name "MessagingCluster" \
       --broker-node-group-info file://kafka.json \
       --kafka-version "2.2.1" \
-      --number-of-broker-nodes 3
+      --number-of-broker-nodes 3 --region $DEFAULT_REGION
