@@ -6,6 +6,7 @@ stages:
   - list
   - dynamodb
   - lambda
+  - kafka
 
 services:
   - name: localstack/localstack
