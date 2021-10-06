@@ -2,11 +2,12 @@ image: ubuntu
 
 stages:
   - build
+  - kafka
   - create
   - list
   - dynamodb
   - lambda
-  - kafka
+
 
 services:
   - name: localstack/localstack
@@ -81,7 +82,7 @@ kafka-localstack:
   stage: kafka
   script:
     - |
-      aws --endpoint-url$AWS_ENDPOINT  kafka create-cluster \
+      aws --endpoint-url $AWS_ENDPOINT  kafka create-cluster \
       --cluster-name "MessagingCluster" \
       --broker-node-group-info file://brokernodegroupinfo.json \
       --kafka-version "2.2.1" \
