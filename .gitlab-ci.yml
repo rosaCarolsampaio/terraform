@@ -48,37 +48,37 @@ test-application:
     paths:
       - s3://my-test-bucket/
   script:
-    - awscli-local s3api list-buckets 
-    - awscli-local  s3 ls
-    - awscli-local  s3 mb s3://my-test-bucket
-    - awscli-local s3api list-buckets 
-    - aws s3 cp ./ s3://my-test-bucket/
+    - awslocal s3api list-buckets 
+    - awslocal s3 ls
+    - awslocal s3 mb s3://my-test-bucket
+    - awslocal s3api list-buckets 
+    - awslocal s3 cp ./ s3://my-test-bucket/
 
 test-localstack:
   stage: list
   dependencies:
     - test-application
   script:
-    - awscli-local  s3 ls
-    - awscli-local s3api list-buckets 
+    - awslocal s3 ls
+    - awslocal s3api list-buckets 
 
 dynamo-localstack:
   stage: dynamodb
   script:
     - echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
     - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
-    - awscli-local configure set region $DEFAULT_REGION
-    - awscli-local  dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-    - awscli-local  dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
-    - awscli-local  dynamodb list-tables 
-    - awscli-local  dynamodb query --table-name Music --key-conditions file://query_table.json
+    - awslocall configure set region $DEFAULT_REGION
+    - awslocal  dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+    - awslocal  dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
+    - awslocal  dynamodb list-tables 
+    - awslocal  dynamodb query --table-name Music --key-conditions file://query_table.json
     
 
 lambda-localstack:
   stage: lambda
   script:
-    - awscli-local configure set region $DEFAULT_REGION 
-    - awscli-local  lambda list-functions
+    - awslocal configure set region $DEFAULT_REGION 
+    - awslocal  lambda list-functions
 
 
 
@@ -86,7 +86,7 @@ kafka-localstack:
   stage: kafka
   script:
     - echo '{"InstanceType":"kafka.m5.xlarge","BrokerAZDistribution":"DEFAULT","ClientSubnets":["subnet-0123456789111abcd","subnet-0123456789222abcd","subnet-0123456789333abcd"]}' >  kafka.json
-    - awscli-local   kafka create-cluster  --cluster-name "MessagingCluster"  --broker-node-group-info file://kafka.json  --kafka-version "2.2.1" --number-of-broker-nodes 3 --region $DEFAULT_REGION
+    - awslocal   kafka create-cluster  --cluster-name "MessagingCluster"  --broker-node-group-info file://kafka.json  --kafka-version "2.2.1" --number-of-broker-nodes 3 --region $DEFAULT_REGION
 
 
 Scripts Golang:
