@@ -85,7 +85,8 @@ kafka-localstack:
   stage: kafka
   script:
     - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["wortenCluster-1 Subnet ID","wortenCluster-2 Subnet ID","wortenCluster-3 Subnet ID"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":3}' >  kafka.json
-    - awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION
+    - awslocal kafka 
+    #create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION
 
 
 Scripts Golang:
