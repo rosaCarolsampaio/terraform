@@ -93,7 +93,7 @@ kafka-localstack:
     #torna a subrede pública
     - awslocal ec2 create-internet-gateway > result.json
      #anexe o gateway da Internet à sua VPC
-    - message=$(resul.json) 
+    - message=$(result.json) 
     - awslocal ec2 attach-internet-gateway --vpc-id vpc-2f09a348 --internet-gateway-id $message.InternetGateway["InternetGatewayId"]
     - awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION
 
