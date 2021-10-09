@@ -87,6 +87,7 @@ kafka-localstack:
     - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["wortenCluster-1 Subnet ID","wortenCluster-2 Subnet ID","wortenCluster-3 Subnet ID"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":3}' >  kafka.json
     #cria uma virtual private cloud
     - vcpID=$(awslocal ec2 create-vpc --cidr-block 10.0.0.0/16) 
+    - echo $vpcID
     - echo "${vcpID}" > result.json
     - vpcID=$(jq '.VpcId' result.json) && echo $vpcID
     #cria uma subrede para a vpc
