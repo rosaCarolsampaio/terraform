@@ -24,7 +24,7 @@ variables:
   AWS_SECRET_ACCESS_KEY: localsecret
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
-  LOCALSTACK_HOST: http://localstack
+  LOCALSTACK_HOST: localstack
 
 before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
