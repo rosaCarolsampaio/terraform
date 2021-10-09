@@ -22,7 +22,7 @@ variables:
   DEFAULT_REGION: eu-west-2
   AWS_ACCESS_KEY_ID: localkey
   AWS_SECRET_ACCESS_KEY: localsecret
-  awscli-local_DYNAMODB_ENDPOINT: http://dynamodb:8000
+  AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: http://localstack:4566
 
