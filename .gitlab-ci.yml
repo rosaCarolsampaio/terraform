@@ -89,7 +89,7 @@ kafka-localstack:
     - vpcID=$(awslocal ec2 create-vpc --cidr-block 10.0.0.0/16) 
     - echo $vpcID
     - echo "${vpcID}" > result.json
-    - vpcID=$(jq '.Vpc["VpcId"] result.json) && echo $vpcID
+    - vpcID=$(jq '.Vpc.VpcId' result.json) && echo $vpcID
     #cria uma subrede para a vpc
     - awslocal ec2 create-subnet --vpc-id $vpcID --cidr-block 10.0.1.0/24
     #torna a subrede pública
