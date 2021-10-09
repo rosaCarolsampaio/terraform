@@ -90,6 +90,6 @@ kafka-localstack:
 
 
 Scripts Golang:
-   stage: golang
+  stage: golang
   script:
-  - go run main.go
+    - go run main.go
