@@ -3,6 +3,7 @@ image: ubuntu
 stages:
   - build
   - kafka
+  - golang
   - create
   - list
   - dynamodb
@@ -12,22 +13,24 @@ stages:
 services:
   - name: localstack/localstack
     alias: localstack
+  - name: golang:latest
+    alias: golang
 
 variables:
   SERVICES: s3,sns,sqs, dynamodb,lambda, kafka
   HOSTNAME_EXTERNAL: localstack 
   DEFAULT_REGION: eu-west-2
-  AWS_ACCESS_KEY_ID: localkey
-  AWS_SECRET_ACCESS_KEY: localsecret
-  AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
+  awscli-local_ACCESS_KEY_ID: localkey
+  awscli-local_SECRET_ACCESS_KEY: localsecret
+  awscli-local_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
-  AWS_ENDPOINT: http://localstack:4566
+  LOCALSTACK_HOST: http://localstack:4566
 
 before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   - apt -y update
   - apt -y install pip
-  - pip install awscli
+  - pip install awscli  awscli-local
 
 #after_script:
  
@@ -45,36 +48,37 @@ test-application:
     paths:
       - s3://my-test-bucket/
   script:
-    - aws s3api list-buckets --endpoint-url=$AWS_ENDPOINT
-    - aws --endpoint-url=$AWS_ENDPOINT s3 ls
-    - aws --endpoint-url=$AWS_ENDPOINT s3 mb s3://my-test-bucket
-    - aws s3api list-buckets --endpoint-url=$AWS_ENDPOINT
+    - awscli-local s3api list-buckets 
+    - awscli-local  s3 ls
+    - awscli-local  s3 mb s3://my-test-bucket
+    - awscli-local s3api list-buckets 
+    - aws s3 cp ./ s3://my-test-bucket/
 
 test-localstack:
   stage: list
   dependencies:
     - test-application
   script:
-    - aws --endpoint-url=$AWS_ENDPOINT s3 ls
-    - aws s3api list-buckets --endpoint-url=$AWS_ENDPOINT
+    - awscli-local  s3 ls
+    - awscli-local s3api list-buckets 
 
 dynamo-localstack:
   stage: dynamodb
   script:
     - echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
     - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
-    - aws configure set region $DEFAULT_REGION
-    - aws --endpoint-url $AWS_ENDPOINT dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-    - aws --endpoint-url $AWS_ENDPOINT dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
-    - aws --endpoint-url $AWS_ENDPOINT dynamodb list-tables 
-    - aws --endpoint-url $AWS_ENDPOINT dynamodb query --table-name Music --key-conditions file://query_table.json
+    - awscli-local configure set region $DEFAULT_REGION
+    - awscli-local  dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
+    - awscli-local  dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
+    - awscli-local  dynamodb list-tables 
+    - awscli-local  dynamodb query --table-name Music --key-conditions file://query_table.json
     
 
 lambda-localstack:
   stage: lambda
   script:
-    - aws configure set region $DEFAULT_REGION 
-    - aws --endpoint-url $AWS_ENDPOINT lambda list-functions
+    - awscli-local configure set region $DEFAULT_REGION 
+    - awscli-local  lambda list-functions
 
 
 
@@ -82,9 +86,10 @@ kafka-localstack:
   stage: kafka
   script:
     - echo '{"InstanceType":"kafka.m5.xlarge","BrokerAZDistribution":"DEFAULT","ClientSubnets":["subnet-0123456789111abcd","subnet-0123456789222abcd","subnet-0123456789333abcd"]}' >  kafka.json
-    - |
-      aws --endpoint-url $AWS_ENDPOINT  kafka create-cluster \
-      --cluster-name "MessagingCluster" \
-      --broker-node-group-info file://kafka.json \
-      --kafka-version "2.2.1" \
-      --number-of-broker-nodes 3 --region $DEFAULT_REGION
+    - awscli-local   kafka create-cluster  --cluster-name "MessagingCluster"  --broker-node-group-info file://kafka.json  --kafka-version "2.2.1" --number-of-broker-nodes 3 --region $DEFAULT_REGION
+
+
+Scripts Golang:
+   stage: golang
+  script:
+  - go run main.go
