@@ -86,9 +86,10 @@ kafka-localstack:
   script:
     - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["wortenCluster-1 Subnet ID","wortenCluster-2 Subnet ID","wortenCluster-3 Subnet ID"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":3}' >  kafka.json
     #cria uma vpc
-    - awslocal ec2 create-vpc --cidr-block 10.0.0.0/16
+    - awslocal ec2 create-vpc --cidr-block 10.0.0.0/16 > result.json
+    - message=$(resul.json) 
     #cria uma subrede para a vpc
-    - awslocal ec2 create-subnet --vpc-id vpc-2f09a348 --cidr-block 10.0.1.0/24
+    - awslocal ec2 create-subnet --vpc-id $message.Vpc["VpcId"] --cidr-block 10.0.1.0/24
     #torna a subrede pública
     - awslocal ec2 create-internet-gateway > result.json
      #anexe o gateway da Internet à sua VPC
