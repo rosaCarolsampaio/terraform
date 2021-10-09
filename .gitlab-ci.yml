@@ -52,7 +52,7 @@ test-application:
     - awslocal s3 ls
     - awslocal s3 mb s3://my-test-bucket
     - awslocal s3api list-buckets 
-    - awslocal s3 cp ./ s3://my-test-bucket/
+    - awslocal s3 cp ./ s3://my-test-bucket/ --recursive
 
 test-localstack:
   stage: list
