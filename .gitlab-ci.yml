@@ -20,8 +20,8 @@ variables:
   SERVICES: s3,sns,sqs, dynamodb,lambda, kafka
   HOSTNAME_EXTERNAL: localstack 
   DEFAULT_REGION: eu-west-2
-  awscli-local_ACCESS_KEY_ID: localkey
-  awscli-local_SECRET_ACCESS_KEY: localsecret
+  AWS_ACCESS_KEY_ID: localkey
+  AWS_SECRET_ACCESS_KEY: localsecret
   awscli-local_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: http://localstack:4566
