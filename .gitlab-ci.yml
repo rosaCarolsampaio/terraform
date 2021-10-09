@@ -88,7 +88,7 @@ kafka-localstack:
     #cria uma vpc
     - message=$(awslocal ec2 create-vpc --cidr-block 10.0.0.0/16)
     #cria uma subrede para a vpc
-    - awslocal ec2 create-subnet --vpc-id $message.Vpc["VpcId"] --cidr-block 10.0.1.0/24
+    - awslocal ec2 create-subnet --vpc-id $message["VpcId"] --cidr-block 10.0.1.0/24
     #torna a subrede pública
     - awslocal ec2 create-internet-gateway > result.json
      #anexe o gateway da Internet à sua VPC
