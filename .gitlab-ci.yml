@@ -19,7 +19,7 @@ services:
 variables:
   SERVICES: s3,sns,sqs, dynamodb,lambda, kafka, ec2
   HOSTNAME_EXTERNAL: localstack 
-  DEFAULT_REGION: eu-west-2
+  AWS_DEFAULT_REGION: eu-west-2
   AWS_ACCESS_KEY_ID: localkey
   AWS_SECRET_ACCESS_KEY: localsecret
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
@@ -77,7 +77,7 @@ dynamo-localstack:
 lambda-localstack:
   stage: lambda
   script:
-    - awslocal configure set region $DEFAULT_REGION 
+   # - awslocal configure set region $DEFAULT_REGION 
     - awslocal  lambda list-functions
 
 
@@ -88,22 +88,26 @@ kafka-localstack:
     - vpcID=$(awslocal ec2 create-vpc --cidr-block 10.0.0.0/16) 
     - echo $vpcID &&  echo "${vpcID}" > result.json
     - vpcID=$(jq -r '.Vpc.VpcId' result.json) && echo $vpcID
+
     # create a subrede to the vpc
     - subnetID=$(awslocal ec2 create-subnet --vpc-id $vpcID --cidr-block 10.0.1.0/24)
     - echo $subnetID &&  echo "${subnetID}" > result.json
     - subnetID=$(jq -r '.Subnet.SubnetId' result.json) && echo $subnetID
+
     # make the subnet public
     - InternetGateway=$(awslocal ec2 create-internet-gateway)
     - echo $InternetGateway &&  echo "${InternetGateway}" > result.json
     - InternetGateway=$(jq -r '.InternetGateway.InternetGatewayId' result.json) && echo $InternetGateway
+
     # attach the internet gateway to your VPC
     - awslocal ec2 attach-internet-gateway --vpc-id $vpcID --internet-gateway-id $InternetGateway
     - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["'"${subnetID}"'"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":1}' >  kafka.json
     - cat kafka.json
+
     ### CREATE CLUSTERS
     - awslocal ec2 describe-vpcs --output table
     - awslocal ec2 describe-subnets --filters "Name=vpc-id,Values=$vpcID" --output table | egrep "Name|AvailabilityZone|SubnetId"
-    - echo -e "auto.create.topics.enable = true \n  delete.topic.enable = true \n   log.retention.hours = 8" > cluster_config.txt
+    - echo -e "auto.create.topics.enable = true\ndelete.topic.enable = true\nlog.retention.hours = 8" > cluster_config.txt
     - cat cluster_config.txt
     - awslocal kafka create-configuration --name "configuration" --description "configuration used for topic creation" --kafka-versions "2.3.1" "2.2.1" --server-properties fileb://cluster_config.txt 
 
