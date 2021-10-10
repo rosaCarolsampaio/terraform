@@ -67,7 +67,7 @@ dynamo-localstack:
   script:
     - echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
     - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
-    - awslocall configure set region $DEFAULT_REGION
+    - awslocal configure set region $DEFAULT_REGION
     - awslocal  dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
     - awslocal  dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
     - awslocal  dynamodb list-tables 
@@ -84,7 +84,6 @@ lambda-localstack:
 kafka-localstack:
   stage: kafka
   script:
-    - awslocal configure set region $DEFAULT_REGION 
     # create a virtual private cloud and save the vpc ID:
     - vpcID=$(awslocal ec2 create-vpc --cidr-block 10.0.0.0/16) 
     - echo $vpcID &&  echo "${vpcID}" > result.json
@@ -108,7 +107,7 @@ kafka-localstack:
     - cat cluster_config.txt
     - awslocal kafka create-configuration --name "configuration" --description "configuration used for topic creation" --kafka-versions "2.3.1" "2.2.1" --server-properties fileb://cluster_config.txt 
 
-    - result=$(awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION) && echo $result
+    - result=$(awslocal kafka create-cluster --cli-input-json file://kafka.json ) && echo $result
 
 
 Scripts Golang:
