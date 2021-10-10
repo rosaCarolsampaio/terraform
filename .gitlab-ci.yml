@@ -89,14 +89,16 @@ kafka-localstack:
     - echo $vpcID &&  echo "${vpcID}" > result.json
     - vpcID=$(jq -r '.Vpc.VpcId' result.json) && echo $vpcID
     # create a subrede to the vpc
-    - awslocal ec2 create-subnet --vpc-id $vpcID --cidr-block 10.0.1.0/24
-    # torna a subrede pública
+    - subnetID=$(awslocal ec2 create-subnet --vpc-id $vpcID --cidr-block 10.0.1.0/24)
+    - echo $subnetID &&  echo "${subnetID}" > result.json
+    - subnetID=$(jq -r '.Subnet.SubnetId' result.json) && echo $subnetID
+    # make the subnet public
     - InternetGateway=$(awslocal ec2 create-internet-gateway)
     - echo $InternetGateway &&  echo "${InternetGateway}" > result.json
     - InternetGateway=$(jq -r '.InternetGateway.InternetGatewayId' result.json) && echo $InternetGateway
-    #anexe o gateway da Internet à sua VPC
+    # attach the internet gateway to your VPC
     - awslocal ec2 attach-internet-gateway --vpc-id $vpcID --internet-gateway-id $InternetGateway
-    - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["wortenCluster-1 $vpcID","wortenCluster-2 $vpcID","wortenCluster-3 $vpcID"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":3}' >  kafka.json
+    - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["${subnetID}"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":1}' >  kafka.json
     - awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION
 
 
