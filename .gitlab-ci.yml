@@ -84,19 +84,19 @@ lambda-localstack:
 kafka-localstack:
   stage: kafka
   script:
-    - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["wortenCluster-1 Subnet ID","wortenCluster-2 Subnet ID","wortenCluster-3 Subnet ID"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":3}' >  kafka.json
-    #cria uma virtual private cloud
+    # create a virtual private cloud and save the vpc ID:
     - vpcID=$(awslocal ec2 create-vpc --cidr-block 10.0.0.0/16) 
-    - echo $vpcID
-    - echo "${vpcID}" > result.json
+    - echo $vpcID &&  echo "${vpcID}" > result.json
     - vpcID=$(jq -r '.Vpc.VpcId' result.json) && echo $vpcID
-    #cria uma subrede para a vpc
+    # create a subrede to the vpc
     - awslocal ec2 create-subnet --vpc-id $vpcID --cidr-block 10.0.1.0/24
-    #torna a subrede pública
-    - awslocal ec2 create-internet-gateway > result.json
-     #anexe o gateway da Internet à sua VPC
-    - message=$(result.json) 
-    - awslocal ec2 attach-internet-gateway --vpc-id vpc-2f09a348 --internet-gateway-id $message.InternetGateway["InternetGatewayId"]
+    # torna a subrede pública
+    - InternetGateway=$(awslocal ec2 create-internet-gateway)
+    - echo $InternetGateway &&  echo "${InternetGateway}" > result.json
+    - InternetGateway=$(jq -r '.InternetGateway.InternetGatewayId' result.json) && echo $InternetGateway
+    #anexe o gateway da Internet à sua VPC
+    - awslocal ec2 attach-internet-gateway --vpc-id $vpcID --internet-gateway-id $InternetGateway
+    - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["wortenCluster-1 $vpcID","wortenCluster-2 $vpcID","wortenCluster-3 $vpcID"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":3}' >  kafka.json
     - awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION
 
 
