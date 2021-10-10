@@ -102,7 +102,7 @@ kafka-localstack:
     - cat kafka.json
     ### CREATE CLUSTERS
     - awslocal ec2 describe-vpcs --output table
-    - aws ec2 describe-subnets --filters "Name=vpc-id,Values="$vpcID" --output table | egrep "Name|AvailabilityZone|SubnetId --region $DEFAULT_REGION"
+    - aws ec2 describe-subnets --filters "Name=vpc-id,Values=$vpcID" --output table | egrep "Name|AvailabilityZone|SubnetId --region $DEFAULT_REGION"
 
     - result=$(awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION) && echo $result
 
