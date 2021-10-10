@@ -99,7 +99,7 @@ kafka-localstack:
     # attach the internet gateway to your VPC
     - awslocal ec2 attach-internet-gateway --vpc-id $vpcID --internet-gateway-id $InternetGateway
     - echo '{"BrokerNodeGroupInfo":{"BrokerAZDistribution":"DEFAULT","InstanceType":"kafka.m5.large","ClientSubnets":["${subnetID}"],"SecurityGroups":["AWSKafkaTutorialVPC Security Group ID"]},"ClusterName":"wortenCluster","EnhancedMonitoring":"PER_TOPIC_PER_BROKER","KafkaVersion":"2.2.1","NumberOfBrokerNodes":1}' >  kafka.json
-    - kafka= kafka.json && echo $kafka
+    - kafka=kafka.json && echo $kafka
     - awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION
 
 
