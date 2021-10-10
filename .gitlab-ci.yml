@@ -104,6 +104,7 @@ kafka-localstack:
     - awslocal ec2 describe-vpcs --output table
     - awslocal ec2 describe-subnets --filters "Name=vpc-id,Values=$vpcID" --output table | egrep "Name|AvailabilityZone|SubnetId"
     - echo -e "auto.create.topics.enable = true \n  delete.topic.enable = true \n   log.retention.hours = 8" > cluster_config.txt
+    - cat cluster_config.txt
     - awslocal kafka create-configuration --name "configuration" --description "configuration used for topic creation" --kafka-versions "2.3.1" "2.2.1" --server-properties file://cluster_config.txt
 
     - result=$(awslocal kafka create-cluster --cli-input-json file://kafka.json  --region $DEFAULT_REGION) && echo $result
