@@ -10,6 +10,9 @@ stages:
   - dynamodb
   - lambda
 
+services:
+  - docker/compose
+
 # services:
 #   - name: localstack/localstack
 #     alias: localstack
@@ -25,8 +28,8 @@ variables:
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
-  # DOCKER_HOST: tcp://docker:2375/
-  # DOCKER_DRIVER: overlay2
+  DOCKER_HOST: tcp://docker:2375/
+  DOCKER_DRIVER: overlay2
 
 before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
