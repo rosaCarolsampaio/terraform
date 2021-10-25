@@ -29,8 +29,8 @@ variables:
 
 before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
-  - apt -y update
-  - apt -y install pip jq  curl
+  - apt-get -y update
+  - apt-get -y install pip jq curl
   - pip install --upgrade awscli  awscli-local
   
   
