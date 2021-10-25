@@ -11,8 +11,8 @@ stages:
   - lambda
 
 services:
-  - docker/compose
-   alias: docker
+  - name: docker/compose
+    alias: docker
 
 # services:
 #   - name: localstack/localstack
