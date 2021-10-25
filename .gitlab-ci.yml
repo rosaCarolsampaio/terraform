@@ -31,12 +31,17 @@ before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   - apt -y update
   - apt -y install pip jq
-  - pip install --upgrade awscli  awscli-local docker-compose
+  - pip install --upgrade awscli  awscli-local curl
+  
   
 
 Build:
   stage: build 
-  script: docker-compose up
+  script: 
+  - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+  - chmod +x /usr/local/bin/docker-compose
+  - docker–compose --version
+  - docker-compose up
 #after_script:
 
 cache:
@@ -119,7 +124,7 @@ kafka-localstack:
     - result=$(awslocal kafka create-cluster --cli-input-json file://kafka.json ) && echo $result
 
 
-Scripts Golang:
-  stage: golang
-  script:
-    - go run main.go
+# Scripts Golang:
+#   stage: golang
+#   script:
+#     - go run main.go
