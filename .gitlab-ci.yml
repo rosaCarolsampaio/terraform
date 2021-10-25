@@ -1,4 +1,4 @@
-image: ubuntu/dind
+image: docker
 
 stages:
   - build
