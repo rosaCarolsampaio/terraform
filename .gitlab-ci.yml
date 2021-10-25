@@ -1,4 +1,4 @@
-image: docker/compose
+image: ubuntu
 
 stages:
   - build
@@ -12,6 +12,7 @@ stages:
 
 services:
   - docker/compose
+   alias: docker
 
 # services:
 #   - name: localstack/localstack
