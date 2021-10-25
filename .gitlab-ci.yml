@@ -30,11 +30,12 @@ before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   - apt -y update
   - apt -y install pip jq
-  - pip install --upgrade awscli  awscli-local 
+  - pip install --upgrade awscli  awscli-local
+  
 
-
+Build:
+   -script: docker-compose up
 #after_script:
- 
 cache:
   paths:
     - s3.localhost.localstack.cloud/
