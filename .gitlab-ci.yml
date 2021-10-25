@@ -1,4 +1,4 @@
-image: docker:latest
+image: docker/compose
 
 stages:
   - build
@@ -31,7 +31,6 @@ before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   # - apt-get -y update
   # - apt-get -y install python3-pip jq curl
-  
   - apk update
   - apk add py3-pip && apk add jq && apk add curl
   - pip3 install --upgrade awscli  awscli-local
@@ -43,7 +42,8 @@ Build:
   # - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose | true 
   # - chmod +x /usr/local/bin/docker-compose 
   # - ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-  - apk add --no-cache docker-compose
+  
+  #- apk add --no-cache docker-compose
   - docker–compose --version
   - docker-compose up -d
 #after_script:
