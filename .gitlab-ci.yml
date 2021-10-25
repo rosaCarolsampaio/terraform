@@ -34,8 +34,9 @@ before_script:
   
 
 Build:
-   -script: docker-compose up
+  script: docker-compose up
 #after_script:
+
 cache:
   paths:
     - s3.localhost.localstack.cloud/
