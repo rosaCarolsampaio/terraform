@@ -10,7 +10,9 @@ stages:
   - dynamodb
   - lambda
 
-
+services:
+  - docker:dind
+  
 # services:
 #   - name: localstack/localstack
 #     alias: localstack
@@ -34,6 +36,8 @@ before_script:
   - apk update
   - apk add py3-pip && apk add jq && apk add curl
   - pip3 install --upgrade awscli  awscli-local
+  - docker–compose --version
+  - docker-compose up -d
   
   
 Build:
@@ -42,10 +46,9 @@ Build:
   # - curl -L "https://github.com/docker/compose/releases/download/1.29.2/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose | true 
   # - chmod +x /usr/local/bin/docker-compose 
   # - ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
-  
+
   #- apk add --no-cache docker-compose
-  - docker–compose --version
-  - docker-compose up -d
+
 #after_script:
 
 cache:
