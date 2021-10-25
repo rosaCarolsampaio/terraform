@@ -31,7 +31,7 @@ before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   - apt-get -y update
   - apt-get -y install python3-pip jq curl
-  - pip install --upgrade awscli  awscli-local
+  - pip3 install --upgrade awscli  awscli-local
   
   
 
