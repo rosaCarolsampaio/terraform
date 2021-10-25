@@ -2,6 +2,7 @@ image: ubuntu
 
 stages:
   - build
+  - test
   - kafka
   - golang
   - create
@@ -34,6 +35,7 @@ before_script:
   
 
 Build:
+  stage: build 
   script: docker-compose up
 #after_script:
 
@@ -42,7 +44,7 @@ cache:
     - s3.localhost.localstack.cloud/
 
 test-application:
-  stage: build 
+  stage: test 
   # extends: build
   # cache:
   #   paths:
