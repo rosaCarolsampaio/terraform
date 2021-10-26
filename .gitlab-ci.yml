@@ -49,7 +49,7 @@ Build:
     - apk add --no-cache docker-compose
    # - pip3 install docker-compose
     - docker-compose --version
-    - docker-compose up -d --build -f docker-compose.yml
+    - docker-compose up -d --build 
   
 
 #after_script:
