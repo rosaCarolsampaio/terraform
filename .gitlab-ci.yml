@@ -42,7 +42,8 @@ Build:
     - apk update
     - apk add py3-pip && apk add jq && apk add curl
     - pip3 install --upgrade awscli  awscli-local
-    -  apk add --no-cache docker-compose
+    - apk add --no-cache docker-compose
+    - docker-compose --version
   
 
 #after_script:
