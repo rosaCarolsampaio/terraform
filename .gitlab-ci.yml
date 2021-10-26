@@ -1,5 +1,3 @@
-image: docker
-
 stages:
   - build
   - test
@@ -11,7 +9,7 @@ stages:
   - lambda
 
 services:
-  - name: docker/dind
+  - name: docker
     alias: docker 
   
 # services:
