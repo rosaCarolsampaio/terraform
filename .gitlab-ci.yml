@@ -1,3 +1,5 @@
+image: docker
+
 stages:
   - build
   - test
@@ -8,9 +10,9 @@ stages:
   - dynamodb
   - lambda
 
-services:
-  - name: docker
-    alias: docker 
+# services:
+#   - name: docker/dind
+#     alias: docker 
   
 # services:
 #   - name: localstack/localstack
