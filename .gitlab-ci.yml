@@ -8,7 +8,9 @@ stages:
   - dynamodb
   - lambda
 
-
+services:
+  -name:docker/compose
+    alias: docker 
   
 # services:
 #   - name: localstack/localstack
@@ -25,7 +27,7 @@ variables:
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
-  DOCKER_HOST: 127.0.0.1:2375
+  DOCKER_HOST: docker:2375
   # DOCKER_DRIVER: overlay2
 
 before_script:
@@ -42,7 +44,7 @@ Build:
     - apk update
     - apk add py3-pip && apk add jq && apk add curl
     - pip3 install --upgrade awscli  awscli-local
-    - apk add --no-cache docker-compose
+   # - apk add --no-cache docker-compose
     - docker-compose --version
     - docker-compose up -d
   
