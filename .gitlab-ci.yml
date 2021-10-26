@@ -8,9 +8,9 @@ stages:
   - dynamodb
   - lambda
 
-services:
-  - name: docker/compose
-    alias: docker 
+# services:
+#   - name: docker/compose
+#     alias: docker 
   
 # services:
 #   - name: localstack/localstack
@@ -37,6 +37,7 @@ before_script:
   
   
   
+  
 Build:
   stage: build 
   script: 
@@ -44,6 +45,7 @@ Build:
     - apk add py3-pip && apk add jq && apk add curl
     - pip3 install --upgrade awscli  awscli-local
    # - apk add --no-cache docker-compose
+    - pip3 install docker-compose
     - docker-compose --version
     - docker-compose up -d
   
