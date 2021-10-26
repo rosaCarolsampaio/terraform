@@ -11,7 +11,7 @@ stages:
   - lambda
 
 services:
-  - name: docker/compose
+  - name: docker
     alias: docker 
   
 # services:
@@ -30,7 +30,7 @@ variables:
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
   DOCKER_HOST: docker:2375
-  # DOCKER_DRIVER: overlay2
+  #DOCKER_DRIVER: overlay2
 
 before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
@@ -46,8 +46,8 @@ Build:
     - apk update
     - apk add py3-pip && apk add jq && apk add curl
     - pip3 install --upgrade awscli  awscli-local
-   # - apk add --no-cache docker-compose
-    - pip3 install docker-compose
+    - apk add --no-cache docker-compose
+   # - pip3 install docker-compose
     - docker-compose --version
     - docker-compose up -d --build
   
