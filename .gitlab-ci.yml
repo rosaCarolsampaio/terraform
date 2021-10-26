@@ -11,7 +11,7 @@ stages:
   - lambda
 
 services:
-  - name: docker/compose
+  - name: docker/dind
     alias: docker 
   
 # services:
