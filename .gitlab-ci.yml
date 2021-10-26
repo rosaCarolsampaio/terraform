@@ -1,4 +1,4 @@
-image: docker
+image: alpine
 
 stages:
   - build
@@ -10,9 +10,9 @@ stages:
   - dynamodb
   - lambda
 
-# services:
-#   - name: docker/dind
-#     alias: docker 
+services:
+  - name: docker/compose
+    alias: docker 
   
 # services:
 #   - name: localstack/localstack
