@@ -9,7 +9,7 @@ stages:
   - lambda
 
 services:
-  -name:docker/compose
+  - name: docker/compose
     alias: docker 
   
 # services:
@@ -39,7 +39,6 @@ before_script:
   
 Build:
   stage: build 
-  image:  docker/compose
   script: 
     - apk update
     - apk add py3-pip && apk add jq && apk add curl
