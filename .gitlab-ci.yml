@@ -10,9 +10,9 @@ stages:
   - dynamodb
   - lambda
 
-services:
-  - name: docker
-    alias: docker 
+# services:
+#   - name: docker
+#     alias: docker 
   
 # services:
 #   - name: localstack/localstack
