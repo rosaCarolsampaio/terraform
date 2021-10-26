@@ -44,6 +44,7 @@ Build:
     - pip3 install --upgrade awscli  awscli-local
     - apk add --no-cache docker-compose
     - docker-compose --version
+    - docker-compose up -d
   
 
 #after_script:
