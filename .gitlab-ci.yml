@@ -21,7 +21,7 @@ services:
 #     alias: golang
 
 variables:
-  SERVICES: s3,sns,sqs, dynamodb,lambda, kafka, ec2
+ # SERVICES: s3,sns,sqs, dynamodb,lambda, kafka, ec2
   HOSTNAME_EXTERNAL: localstack 
   AWS_DEFAULT_REGION: eu-west-2
   AWS_ACCESS_KEY_ID: localkey
@@ -32,7 +32,7 @@ variables:
   HOST: docker:2375
   #DOCKER_DRIVER: overlay2
 
-before_script:
+#before_script:
   # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
   # - apt-get -y update
   # - apt-get -y install python3-pip jq curl
@@ -43,8 +43,9 @@ before_script:
 Build:
   stage: build 
   before_script:
-    - apk update
-    - apk add py-pip jq  curl python python-dev libffi-dev openssl-dev gcc libc-dev
+    #- apk update
+    - apk add py-pip jq  curl 
+    #python python-dev libffi-dev openssl-dev gcc libc-dev
     - pip3 install --upgrade awscli  awscli-local
     #- apk add --no-cache docker-compose
     - pip install docker-compose
