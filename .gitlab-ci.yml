@@ -42,8 +42,8 @@ Build:
   before_script:
     - apk update
     - apk add py-pip jq  curl     #python python-dev libffi-dev openssl-dev gcc libc-dev
+  script: 
     - pip3 install --upgrade awscli  awscli-local
-  # script: 
   #   - docker-compose --version
   #   - docker-compose up -f docker-compose.yml --build
   
