@@ -36,7 +36,6 @@ before_script:
   - apt-get -y install python3-pip jq curl
   - pip3 install --upgrade awscli  awscli-local
     
-  
 cache:
   paths:
     - s3.localhost.localstack.cloud/
@@ -48,7 +47,7 @@ test-localstack:
   script:
     - awslocal s3 ls
     - awslocal s3api list-buckets 
-    
+
 test-application:
   stage: test 
   # extends: build
@@ -64,8 +63,6 @@ test-application:
     - awslocal s3 mb s3://my-test-bucket
     - awslocal s3api list-buckets 
     - awslocal s3 cp ./ s3://my-test-bucket/ --recursive
-
-
 
 dynamo-localstack:
   stage: dynamodb
