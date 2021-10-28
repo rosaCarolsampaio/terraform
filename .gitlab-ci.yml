@@ -28,6 +28,7 @@ variables:
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
   HOST: docker:2375
+  DEBUG: 1
   #DOCKER_DRIVER: overlay2
 
 before_script:
