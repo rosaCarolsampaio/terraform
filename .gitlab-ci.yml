@@ -54,7 +54,7 @@ Lambda.AWS.local:
    
      - awslocal s3 mb s3://lambda-bucket
      - awslocal s3api put-object --bucket lambda-bucket --key lambda
-     - awslocal s3 cp ./src/ s3://lambda-bucket/lambda --recursive
+     - awslocal s3 cp ./src/ s3://lambda-bucket/lambda --recursive --acl public-read-write
      - curl -v http://localstack:4566/lambda-bucket | true
      - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda/" --runtime nodejs14.x  --role "xpto" 
      - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
