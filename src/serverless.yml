@@ -1,0 +1,19 @@
+service: gitlab-example
+provider:
+  name: aws
+  runtime: nodejs14.x
+
+functions:
+  hello:
+    handler: src/handler.hello
+    events:
+      - http: GET hello
+
+plugins:
+  - serverless-localstack
+
+
+custom:
+  localstack:
+     stages:
+       - local
