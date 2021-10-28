@@ -5,9 +5,9 @@ stages:
   - kafka
   - golang
   - create
-  - list
   - dynamodb
   - test
+  - list
 
 
 # services:
