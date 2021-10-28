@@ -41,6 +41,14 @@ cache:
   paths:
     - s3.localhost.localstack.cloud/
 
+test-localstack:
+  stage: list
+  dependencies:
+    - test-application
+  script:
+    - awslocal s3 ls
+    - awslocal s3api list-buckets 
+    
 test-application:
   stage: test 
   # extends: build
@@ -57,13 +65,7 @@ test-application:
     - awslocal s3api list-buckets 
     - awslocal s3 cp ./ s3://my-test-bucket/ --recursive
 
-test-localstack:
-  stage: list
-  dependencies:
-    - test-application
-  script:
-    - awslocal s3 ls
-    - awslocal s3api list-buckets 
+
 
 dynamo-localstack:
   stage: dynamodb
