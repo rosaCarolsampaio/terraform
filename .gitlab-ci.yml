@@ -1,14 +1,14 @@
 image: ubuntu
 
 stages:
-  #- build
   - test
+  - lambda
   - kafka
   - golang
   - create
   - list
   - dynamodb
-  - lambda
+
 
 # services:
 #   - name: docker:dind
@@ -37,18 +37,6 @@ before_script:
   - pip3 install --upgrade awscli  awscli-local
     
   
-  
-# Build:
-#   stage: build 
-#   # before_script:
-#   #   - apk update
-#   #   - apk add py-pip jq  curl     #python python-dev libffi-dev openssl-dev gcc libc-dev
-#   script: 
- 
-#   #   - docker-compose --version
-#   #   - docker-compose up -f docker-compose.yml --build
-  
-
 cache:
   paths:
     - s3.localhost.localstack.cloud/
@@ -89,10 +77,12 @@ dynamo-localstack:
     - awslocal dynamodb query --table-name Music --key-conditions file://query_table.json
     
 
-lambda-localstack:
+Lambda.AWS.local:
   stage: lambda
   script:
-   # - awslocal configure set region $DEFAULT_REGION 
+    - aws --endpoint-url $AWS_ENDPOINT lambda create-function --function-name  "hello" --zip-file handler.zip --handler "handler.hello" --runtime nodejs14.x --role "xpto" 
+    - aws --endpoint-url $AWS_ENDPOINT lambda list-functions --region $DEFAULT_REGION
+    - aws --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
     - awslocal  lambda list-functions
 
 
