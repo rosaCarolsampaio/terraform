@@ -10,9 +10,9 @@ stages:
   - dynamodb
   - lambda
 
-services:
-  - name: docker:dind
-    alias: docker 
+# services:
+#   - name: docker:dind
+#     alias: docker 
   
 services:
   - name: localstack/localstack
@@ -22,7 +22,7 @@ variables:
  SERVICES: s3,sns,sqs, dynamodb,lambda, kafka, ec2
   HOSTNAME_EXTERNAL: localstack 
   AWS_DEFAULT_REGION: eu-west-2
-  AWS_ACCESS_KEY_ID: localkey
+  AWS_ACCESS_KEY_ID: localkey 
   AWS_SECRET_ACCESS_KEY: localsecret
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
