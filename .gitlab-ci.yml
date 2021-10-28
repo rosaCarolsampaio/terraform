@@ -1,13 +1,13 @@
 image: ubuntu
 
 stages:
-  - test
   - lambda
   - kafka
   - golang
   - create
   - list
   - dynamodb
+  - test
 
 
 # services:
@@ -80,9 +80,9 @@ dynamo-localstack:
 Lambda.AWS.local:
   stage: lambda
   script:
-    - aws --endpoint-url $AWS_ENDPOINT lambda create-function --function-name  "hello" --zip-file handler.zip --handler "handler.hello" --runtime nodejs14.x --role "xpto" 
-    - aws --endpoint-url $AWS_ENDPOINT lambda list-functions --region $DEFAULT_REGION
-    - aws --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
+    - awslocal --endpoint-url $AWS_ENDPOINT lambda create-function --function-name  "hello" --zip-file handler.zip --handler "handler.hello" --runtime nodejs14.x --role "xpto" 
+    - awslocal --endpoint-url $AWS_ENDPOINT lambda list-functions --region $DEFAULT_REGION
+    - awslocal --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
     - awslocal  lambda list-functions
 
 
