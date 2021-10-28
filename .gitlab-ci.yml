@@ -56,8 +56,8 @@ Lambda.AWS.local:
      - awslocal s3api put-object --bucket lambda-bucket --key lambda
      - awslocal s3 cp ./src/ s3://lambda-bucket/lambda --recursive
      - curl -v http://localstack:4566/lambda-bucket | true
-    
-     - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
+    -  awslocal s3api list-buckets 
+     - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda/src/" --runtime nodejs14.x  --role "xpto" 
      - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
     # adiciona a permission to role
    # - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
