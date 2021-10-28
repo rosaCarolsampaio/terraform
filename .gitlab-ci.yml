@@ -19,7 +19,7 @@ services:
     alias: localstack
 
 variables:
- SERVICES: s3,sns,sqs, dynamodb,lambda, kafka, ec2
+  SERVICES: s3,sns,sqs, dynamodb,lambda, kafka, ec2
   HOSTNAME_EXTERNAL: localstack 
   AWS_DEFAULT_REGION: eu-west-2
   AWS_ACCESS_KEY_ID: localkey 
@@ -62,8 +62,6 @@ test-application:
     paths:
       - s3://my-test-bucket/
   script:
-    # - docker-compose --version
-    # - docker-compose up -d
     - awslocal s3api list-buckets 
     - awslocal s3 ls
     - awslocal s3 mb s3://my-test-bucket
@@ -130,7 +128,3 @@ kafka-localstack:
     - result=$(awslocal kafka create-cluster --cli-input-json file://kafka.json ) && echo $result
 
 
-# Scripts Golang:
-#   stage: golang
-#   script:
-#     - go run main.go
