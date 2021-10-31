@@ -62,7 +62,7 @@ Lambda.AWS.local:
     
     #Create the function
      - zip handler.zip ./src/handler.js
-     - awslocal lambda create-function --function-name hello --zip-file fileb://lambda/handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
+     - awslocal lambda create-function --function-name hello --zip-file fileb://handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
     # - awslocal lambda create-function --function-name hello  --code S3Bucket="__local__",S3Key="s3://$LOCALSTACK_S3_BUCKET_NAME/lambda" --runtime nodejs14.x  --role arn:aws:iam::000000000000:role/lambda-example 
 
 
