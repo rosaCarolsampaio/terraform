@@ -58,7 +58,7 @@ Lambda.AWS.local:
 
     # create role 
     # - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
-     - awslocal iam create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+     - awslocal create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
     # - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
      
     # adiciona a permission to role
