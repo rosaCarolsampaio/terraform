@@ -15,7 +15,7 @@ stages:
 #     alias: docker 
   
 services:
-  - name: localstack/localstack
+  - name: localstack/localstack:latest
     alias: localstack
 
 variables:
@@ -58,7 +58,7 @@ Lambda.AWS.local:
      - curl -v http://localstack:4566/lambda-bucket | true
 
      - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
-     
+
      - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
      
     # adiciona a permission to role
