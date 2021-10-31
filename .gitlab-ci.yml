@@ -26,10 +26,11 @@ variables:
   AWS_SECRET_ACCESS_KEY: localsecret
   AWS_SESSION_TOKEN: 12345678
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
+  LOCALSTACK_S3_BUCKET_NAME: lambda-bucket
+  LOCALSTACK_DEBUG: 1
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
   HOST: docker:2375
-  DEBUG: 1
   LAMBDA_REMOTE_DOCKER: "false"
   #DOCKER_DRIVER: overlay2
   
@@ -51,16 +52,17 @@ Lambda.AWS.local:
   script:
     # copy the files and create trust 
      - awslocal s3 mb s3://lambda-bucket
-     - awslocal s3api put-object --bucket lambda-bucket --key lambda
-     - awslocal s3 cp ./src/ s3://lambda-bucket/lambda --recursive --acl public-read-write
-     - curl -v http://localstack:4566/lambda-bucket | true
-
-
+     - awslocal s3api put-object --bucket $LOCALSTACK_S3_BUCKET_NAME --key lambda
+     - awslocal s3 cp ./src/ s3://{$LOCALSTACK_S3_BUCKET_NAME}/lambda --recursive --acl public-read-write
+     - curl -v http://localstack:4566/{$LOCALSTACK_S3_BUCKET_NAME} | true
     # create role 
-    # - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
-     - awslocal iam create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
-    # - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
-     
+     - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
+    # - awslocal iam create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+     - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
+
+
+
+
     # adiciona a permission to role
    # - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
