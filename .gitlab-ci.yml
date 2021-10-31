@@ -57,13 +57,12 @@ Lambda.AWS.local:
      - curl -v http://localstack:4566/$LOCALSTACK_S3_BUCKET_NAME | true
     # create role 
      - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
-    # - awslocal iam create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
     #attach the policy
      - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     
     #Create the function
-     - awslocal lambda create-function --function-name hello --zip-file fileb://src/handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
-    # - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://$LOCALSTACK_S3_BUCKET_NAME/lambda" --runtime nodejs14.x  --role "xpto" 
+    # - awslocal lambda create-function --function-name hello --zip-file fileb://src/handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
+     - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://$LOCALSTACK_S3_BUCKET_NAME/lambda" --runtime nodejs14.x  --role "xpto" 
 
 
 
