@@ -28,6 +28,7 @@ variables:
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   LOCALSTACK_S3_BUCKET_NAME: lambda-bucket
   LOCALSTACK_DEBUG: 1
+  LAMBDA_EXECUTOR: docker
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
   HOST: docker:2375
