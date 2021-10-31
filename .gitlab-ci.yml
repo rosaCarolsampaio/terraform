@@ -53,7 +53,7 @@ Lambda.AWS.local:
     # copy the files and create trust 
      - awslocal s3 mb s3://lambda-bucket
      - awslocal s3api put-object --bucket $LOCALSTACK_S3_BUCKET_NAME --key lambda
-     - awslocal s3 cp ./src/ s3://$LOCALSTACK_S3_BUCKET_NAME/lambda --recursive --acl public-read-write
+     - awslocal s3 cp ./src/ s3://$LOCALSTACK_S3_BUCKET_NAME/lambda / --recursive --acl public-read-write
      - curl -v http://localstack:4566/$LOCALSTACK_S3_BUCKET_NAME | true
     # create role 
      - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
@@ -61,8 +61,9 @@ Lambda.AWS.local:
      - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     
     #Create the function
-    # - awslocal lambda create-function --function-name hello --zip-file fileb://src/handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
-     - awslocal lambda create-function --function-name hello  --code S3Bucket="__local__",S3Key="s3://$LOCALSTACK_S3_BUCKET_NAME/lambda/src" --runtime nodejs14.x  --role arn:aws:iam::000000000000:role/lambda-example 
+     - zip ./src/handle.zip handler.js
+     - awslocal lambda create-function --function-name hello --zip-file fileb://src/handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
+    # - awslocal lambda create-function --function-name hello  --code S3Bucket="__local__",S3Key="s3://$LOCALSTACK_S3_BUCKET_NAME/lambda" --runtime nodejs14.x  --role arn:aws:iam::000000000000:role/lambda-example 
 
 
 
