@@ -49,20 +49,17 @@ cache:
 Lambda.AWS.local:
   stage: lambda
   script:
-   
-    
     # copy the files and create trust 
-   
      - awslocal s3 mb s3://lambda-bucket
      - awslocal s3api put-object --bucket lambda-bucket --key lambda
      - awslocal s3 cp ./src/ s3://lambda-bucket/lambda --recursive --acl public-read-write
      - curl -v http://localstack:4566/lambda-bucket | true
 
 
- # create role 
+    # create role 
     # - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
-    - awslocal iam create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
-   # - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
+     - awslocal iam create-role --role-name lambda-example --assume-role-policy-document '{"Version":"2012-10-28","Statement":[{ "Effect":"Allow", "Principal":{"Service":"lambda.amazonaws.com"},"Action":"sts:AssumeRole"}]}'
+    # - awslocal lambda create-function --function-name lambda-example  --code S3Bucket="__local__",S3Key="s3://lambda-bucket/lambda" --runtime nodejs14.x  --role "xpto" 
      
     # adiciona a permission to role
    # - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
