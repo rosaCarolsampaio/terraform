@@ -24,6 +24,7 @@ variables:
   AWS_DEFAULT_REGION: eu-west-2
   AWS_ACCESS_KEY_ID: localkey 
   AWS_SECRET_ACCESS_KEY: localsecret
+  AWS_SESSION_TOKEN: 12345678
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
