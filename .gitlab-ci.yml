@@ -81,7 +81,7 @@ Lambda.AWS.local:
     # - awslocal lambda create-function --function-name  hello --zip-file handler.zip --handler "handler.hello" --runtime nodejs14.x --role "xpto" 
     # - awslocal lambda list-functions --region $DEFAULT_REGION
     # - awslocal --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
-     - awslocal  lambda list-functions
+     - awslocal  lambda list-functions --region us-east-2
 
 
 test-localstack:
