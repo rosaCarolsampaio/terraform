@@ -1,11 +1,11 @@
 service: gitlab-example
 provider:
   name: aws
-  runtime: nodejs14.x
+  runtime: nodejs12.x
 
 functions:
   hello:
-    handler: src/handler.hello
+    handler: src/index.handler
     events:
       - http: GET hello
 
