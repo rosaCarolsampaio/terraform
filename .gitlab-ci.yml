@@ -54,32 +54,23 @@ cache:
 Lambda.AWS.local:
   stage: lambda
   script:
-    # copy the files and create trust 
+    # copy the files and create trust:
     # - awslocal s3 mb s3://$LOCALSTACK_S3_BUCKET_NAME
      - awslocal s3api put-object --bucket $LOCALSTACK_S3_BUCKET_NAME --key lambda
      - awslocal s3 cp ./src/ s3://$LOCALSTACK_S3_BUCKET_NAME --recursive --acl public-read-write
      - curl -v http://localstack:4566/$LOCALSTACK_S3_BUCKET_NAME/lambda/handler.js | true
-    # create role 
+    # create role:
      - awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
-    #attach the policy
+    #attach the policy - a permission to role
      - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     
-    #Create the function
+    #Create the function:
     # - zip handler.zip s3://$LOCALSTACK_S3_BUCKET_NAME/handler.js
     # - awslocal lambda create-function --function-name hello --zip-file fileb://handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
      - awslocal lambda create-function --function-name "hello"  --code S3Bucket=$LOCALSTACK_S3_BUCKET_NAME,S3Key=handler.zip  --handler "index.hello"  --runtime "nodejs14.x"  --region "us-east-2" --memory-size "128"  --role arn:aws:iam::000000000000:role/lambda-example 
 
 
-
-
-    # adiciona a permission to role
-   # - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-
-
-    # create the function- 
-
-    # - awslocal lambda create-function --function-name  hello --zip-file handler.zip --handler "handler.hello" --runtime nodejs14.x --role "xpto" 
-    # - awslocal lambda list-functions --region $DEFAULT_REGION
+    # INVOKE:
     # - awslocal --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
      - awslocal  lambda list-functions --region us-east-2
      - awslocal lambda invoke --function-name "hello" --log-type Tail
