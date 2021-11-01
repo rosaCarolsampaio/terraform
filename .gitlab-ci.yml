@@ -35,7 +35,7 @@ variables:
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
   HOST: docker:2375
-  LAMBDA_REMOTE_DOCKER: "false"
+  LAMBDA_REMOTE_DOCKER: "true"
   #DOCKER_DRIVER: overlay2
   
 
