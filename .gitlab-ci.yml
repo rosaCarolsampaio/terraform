@@ -73,7 +73,7 @@ Lambda.AWS.local:
     # INVOKE:
     # - awslocal --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
      - awslocal  lambda list-functions --region us-east-2
-     - awslocal lambda invoke --function-name hello --log-type Tail
+     - awslocal lambda invoke --function-name hello out --log-type Tail
 
 
 test-localstack:
