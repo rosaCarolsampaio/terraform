@@ -27,6 +27,7 @@ variables:
   AWS_SESSION_TOKEN: 12345678
   AWS_DYNAMODB_ENDPOINT: http://dynamodb:8000
   LOCALSTACK_S3_BUCKET_NAME: lambda-bucket
+  DATA_DIR: /tmp/localstack/data
   LOCALSTACK_DEBUG: 1
   LAMBDA_EXECUTOR: docker
   GIT_CLEAN_FLAGS: none
