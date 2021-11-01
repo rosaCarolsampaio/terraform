@@ -29,10 +29,10 @@ variables:
   LOCALSTACK_S3_BUCKET_NAME: lambda-bucket
   DATA_DIR: /tmp/localstack/data
   DOCKER_HOST: unix:///var/run/docker.sock
-  LAMBDA_REMOTE_DOCKER: "true"
+  LAMBDA_REMOTE_DOCKER: "FALSE"
   HOST_TMP_FOLDER: /tmp/
   LOCALSTACK_DEBUG: 1
-  LAMBDA_EXECUTOR: docker
+  LAMBDA_EXECUTOR: local
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
   HOST: docker:2375
@@ -55,7 +55,7 @@ Lambda.AWS.local:
   stage: lambda
   script:
     # copy the files and create trust 
-     - awslocal s3 mb s3://lambda-bucket
+     - awslocal s3 mb s3://$LOCALSTACK_S3_BUCKET_NAME
      - awslocal s3api put-object --bucket $LOCALSTACK_S3_BUCKET_NAME --key lambda
      - awslocal s3 cp ./src/ s3://$LOCALSTACK_S3_BUCKET_NAME --recursive --acl public-read-write
      - curl -v http://localstack:4566/$LOCALSTACK_S3_BUCKET_NAME/lambda/handler.js | true
