@@ -60,7 +60,7 @@ Lambda.AWS.local:
      - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     #Create the function:
      - zip -r function.zip src/index.js 
-     - awslocal lambda create-function --function-name hello --zip-file fileb://function.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
+     - awslocal lambda create-function --function-name hello --zip-file fileb://function.zip --handler src/index.handler --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
     
     # ok - awslocal lambda create-function --function-name hello  --code S3Bucket=$LOCALSTACK_S3_BUCKET_NAME,S3Key=function.zip  --handler "src/index.handler"  --runtime "nodejs12.x"  --region $AWS_DEFAULT_REGION --memory-size "128"  --role arn:aws:iam::000000000000:role/lambda-example 
     
