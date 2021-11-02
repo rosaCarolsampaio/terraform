@@ -61,7 +61,7 @@ Lambda.AWS.local:
     #Create the function:
     # - awslocal lambda create-function --function-name hello --zip-file fileb://handler.zip --handler index.hello --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
      - zip -r function.zip src/index.js 
-     - awslocal lambda create-function --function-name "hello"  --code S3Bucket=$LOCALSTACK_S3_BUCKET_NAME,S3Key=function.zip  --handler "src/index.handler"  --runtime "nodejs12.x"  --region "us-east-2" --memory-size "128"  --role arn:aws:iam::000000000000:role/lambda-example 
+     - awslocal lambda create-function --function-name hello  --code S3Bucket=$LOCALSTACK_S3_BUCKET_NAME,S3Key=function.zip  --handler "index.handler"  --runtime "nodejs12.x"  --region "us-east-2" --memory-size "128"  --role arn:aws:iam::000000000000:role/lambda-example 
      - awslocal lambda update-function-code --function-name hello --zip-file fileb://function.zip
     # INVOKE:
     # - awslocal --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
