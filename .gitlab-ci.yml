@@ -67,7 +67,7 @@ Lambda.AWS.local:
     # - awslocal --endpoint-url $AWS_ENDPOINT lambda  invoke --function-name "hello" 
      - awslocal lambda list-functions --region $AWS_DEFAULT_REGION
      - awslocal lambda get-function  --region $AWS_DEFAULT_REGION --function-name hello
-     - awslocal lambda invoke --function-name  "arn:aws:lambda:us-east-2:000000000000:function:hello" out --log-type Tail --region $AWS_DEFAULT_REGION
+     - awslocal lambda invoke --function-name  arn:aws:lambda:eu-west-2:000000000000:function:hello out --log-type Tail --region $AWS_DEFAULT_REGION
      - awslocal lambda invoke --function-name "hello" out --log-type Tail --region $AWS_DEFAULT_REGION --query 'LogResult' --output text |  base64 -d
 
 
