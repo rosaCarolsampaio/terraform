@@ -7,7 +7,7 @@ awslocal s3 cp ./src/ s3://$LOCALSTACK_S3_BUCKET_NAME --recursive --acl public-r
 curl -v http://localstack:4566/$LOCALSTACK_S3_BUCKET_NAME/index.js | true
 
 # create role:
-awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trust-policy.json
+awslocal iam create-role --role-name lambda-example --assume-role-policy-document file://src/script/trustPolicy.json
     
 #attach the policy - a permission to role
 awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole

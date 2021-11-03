@@ -3,11 +3,11 @@ image: ubuntu
 stages:
   - lambda
   - dynamodb
-  - kafka
-  - golang
   - create
   - test
   - list
+  - golang
+  - kafka
 
 services:
   - name: localstack/localstack:latest
@@ -82,9 +82,6 @@ test-application:
 
 dynamo-localstack:
   stage: dynamodb
-  script:
-    #- echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
-   # - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
     - bash ./src/sh/dynamoDB.sh
     
 
