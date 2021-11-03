@@ -1,18 +1,36 @@
-version: '3.9'
+version: "3.3"
+
 services:
+  localstack:
+    container_name: "localstack-test"
+    image: localstack/localstack
+    #network_mode: bridge
+    ports:
+      - "127.0.0.1:53:53" # only required for Pro
+      - "127.0.0.1:53:53/udp" # only required for Pro
+      - "127.0.0.1:443:443" # only required for Pro
+      - "127.0.0.1:4510-4530:4510-4530" # only required for Pro
+      - "127.0.0.1:4566:4566"
+      - "127.0.0.1:4571:4571"
+    environment:
+      - SERVICES=${SERVICES- }
+      - DEBUG=${DEBUG- }
+      - DATA_DIR=${DATA_DIR- }
+      - LAMBDA_EXECUTOR=local
+      - DOCKER_HOST=unix:///var/run/docker.sock
+     # - HOST_TMP_FOLDER=${TMPDIR:-/tmp/}localstack
+      - LOCALSTACK_API_KEY=${LOCALSTACK_API_KEY- }
+      - HOSTNAME_EXTERNAL=localstack 
+      - HOST_TMP_FOLDER=/tmp
+      - LAMBDA_REMOTE_DOCKER=false 
+    volumes:
+      - "${TMPDIR:-/tmp}/:/tmp/localstack" 
+      - "/var/run/docker.sock:/var/run/docker.sock"
+    networks:
+     - localstack
+
+networks:
  localstack:
-  image: localstack/localstack
-  ports:
-    - "4567-4597:4567-4597"
-    - "${PORT_WEB_UI-8080}:${PORT_WEB_UI-8080}"
-  environment:
-    - SERVICES=s3,sns,sqs, dynamodb,lambda, kafka, ec2
-    - DEBUG=${DEBUG- }
-    - DATA_DIR=${DATA_DIR- }
-    - PORT_WEB_UI=${PORT_WEB_UI- }
-    - LAMBDA_EXECUTOR=${LAMBDA_EXECUTOR- }
-    - KINESIS_ERROR_PROBABILITY=${KINESIS_ERROR_PROBABILITY- }
-    - DOCKER_HOST=unix:///var/run/docker.sock
-  volumes:
-    - "${TMPDIR:-/tmp/localstack}:/tmp/localstack"
-    - "/var/run/docker.sock:/var/run/docker.sock"
+   external: false
+   driver: bridge
+
