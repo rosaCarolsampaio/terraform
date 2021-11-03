@@ -24,16 +24,19 @@ variables:
   LOCALSTACK_S3_BUCKET_NAME: lambda-bucket
   DATA_DIR: /tmp/localstack/data
   DOCKER_HOST: unix:///var/run/docker.sock
-  LAMBDA_REMOTE_DOCKER: "FALSE"
-  HOST_TMP_FOLDER: /tmp/
   LOCALSTACK_DEBUG: 1
-  LAMBDA_EXECUTOR: docker
   GIT_CLEAN_FLAGS: none
   LOCALSTACK_HOST: localstack
+  LOCALSTACK_DEBUG: 1
   HOST: docker:2375
   #DOCKER_DRIVER: overlay2
-  
-
+  LS_LOG: trace
+  #lambda env:
+  LAMBDA_REMOTE_DOCKER: true
+  LAMBDA_EXECUTOR: local
+  HOST_TMP_FOLDER: $TMPDIR/localstack
+  BUCKET_MARKER_LOCAL: $LOCALSTACK_S3_BUCKET_NAME
+  HOSTNAME_FROM_LAMBDA: localstack
 
 before_script:
  # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
@@ -59,7 +62,7 @@ Lambda.AWS.local:
     #attach the policy - a permission to role
      - awslocal iam attach-role-policy --role-name lambda-example --policy-arn arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
     #Create the function:
-     - zip -r function.zip src/index.js 
+     - zip -r function.zip index.js 
      - awslocal lambda create-function --function-name hello --zip-file fileb://function.zip --handler index.handler --runtime nodejs12.x --role arn:aws:iam::000000000000:role/lambda-example
     
     # ok - awslocal lambda create-function --function-name hello  --code S3Bucket=$LOCALSTACK_S3_BUCKET_NAME,S3Key=function.zip  --handler "src/index.handler"  --runtime "nodejs12.x"  --region $AWS_DEFAULT_REGION --memory-size "128"  --role arn:aws:iam::000000000000:role/lambda-example 
