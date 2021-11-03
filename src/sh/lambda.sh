@@ -25,4 +25,4 @@ awslocal lambda list-functions --region $AWS_DEFAULT_REGION
 awslocal lambda get-function  --region $AWS_DEFAULT_REGION --function-name hello
 awslocal lambda invoke --function-name  arn:aws:lambda:eu-west-2:000000000000:function:hello out --log-type Tail
 
-awslocal logs get-log-events --log-group-name /aws/lambda/hello --log-stream-name $(cat out) --limit 5
+#awslocal logs get-log-events --log-group-name /aws/lambda/hello --log-stream-name $(cat out) --limit 5
