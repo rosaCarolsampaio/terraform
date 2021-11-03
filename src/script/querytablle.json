@@ -1,0 +1,19 @@
+{
+    "Artist": {
+      "AttributeValueList": [
+        {
+          "S": "Acme Band"
+        }
+      ],
+      "ComparisonOperator": "EQ"
+    },
+    "SongTitle": {
+      "AttributeValueList": [
+        {
+          "S": "Happy Day"
+        }
+      ],
+      "ComparisonOperator": "EQ"
+    }
+    
+  }
