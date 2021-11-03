@@ -36,7 +36,7 @@ variables:
   LAMBDA_EXECUTOR: local
   HOST_TMP_FOLDER: $TMPDIR/localstack
   BUCKET_MARKER_LOCAL: $LOCALSTACK_S3_BUCKET_NAME
-  HOSTNAME_FROM_LAMBDA: localstack
+  #HOSTNAME_FROM_LAMBDA: localstack
 
 before_script:
  # - docker login -u gitlab-ci-token -p $CI_BUILD_TOKEN registry.example.com
