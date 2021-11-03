@@ -32,7 +32,7 @@ variables:
   #DOCKER_DRIVER: overlay2
   LS_LOG: trace
   #lambda env:
-  LAMBDA_REMOTE_DOCKER: true
+  LAMBDA_REMOTE_DOCKER: "true"
   LAMBDA_EXECUTOR: local
   HOST_TMP_FOLDER: $TMPDIR/localstack
   BUCKET_MARKER_LOCAL: $LOCALSTACK_S3_BUCKET_NAME
