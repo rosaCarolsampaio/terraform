@@ -1,0 +1,14 @@
+{
+    "Artist": {
+        "S": "Acme Band"
+    },
+    "SongTitle": {
+        "S": "Happy Day"
+    },
+    "AlbumTitle": {
+        "S": "Songs About Life"
+    },
+    "Awards": {
+        "N": "10"
+    }
+}

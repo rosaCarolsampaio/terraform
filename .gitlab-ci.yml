@@ -2,10 +2,10 @@ image: ubuntu
 
 stages:
   - lambda
+  - dynamodb
   - kafka
   - golang
   - create
-  - dynamodb
   - test
   - list
 
@@ -52,7 +52,7 @@ cache:
 Lambda.AWS.local:
   stage: lambda
   script:
-     - ./src/sh/lambda.sh
+     - bash ./src/sh/lambda.sh
      - awslocal lambda invoke --function-name arn:aws:lambda:eu-west-2:000000000000:function:hello out --region $AWS_DEFAULT_REGION --log-type Tail  --query 'LogResult' --output text |  base64 -d
 
 
@@ -83,13 +83,9 @@ test-application:
 dynamo-localstack:
   stage: dynamodb
   script:
-    - echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
-    - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
-    - awslocal configure set region $DEFAULT_REGION
-    - awslocal dynamodb create-table --table-name Music --attribute-definitions AttributeName=Artist,AttributeType=S AttributeName=SongTitle,AttributeType=S --key-schema AttributeName=Artist,KeyType=HASH AttributeName=SongTitle,KeyType=RANGE --provisioned-throughput ReadCapacityUnits=1,WriteCapacityUnits=1
-    - awslocal dynamodb put-item --table-name Music --item  file://item_table.json  --return-consumed-capacity TOTAL 
-    - awslocal dynamodb list-tables 
-    - awslocal dynamodb query --table-name Music --key-conditions file://query_table.json
+    #- echo '{"Artist":{"S":"Acme Band"},"SongTitle":{"S":"Happy Day"}, "AlbumTitle":{"S":"Songs About Life"},"Awards":{"N":"10"}}' > item_table.json 
+   # - echo '{"Artist":{"AttributeValueList":[{"S":"Acme Band"}],"ComparisonOperator":"EQ"},"SongTitle":{"AttributeValueList":[{"S":"Happy Day"}],"ComparisonOperator":"EQ"}}' > query_table.json 
+    - bash ./src/sh/dynamoDB.sh
     
 
 
