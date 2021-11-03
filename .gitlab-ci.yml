@@ -82,6 +82,7 @@ test-application:
 
 dynamo-localstack:
   stage: dynamodb
+  script:
     - bash ./src/sh/dynamoDB.sh
     
 
